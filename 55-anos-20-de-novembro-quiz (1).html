@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>55 anos do 20 de Novembro — Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700;9..144,900&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+/* ======================================================
+   1. TOKENS — paleta, tipografia, espaçamento
+   ====================================================== */
+:root{
+  --grafite:       #1B1712;
+  --grafite-2:     #2A2119;
+  --grafite-3:     #3A2E22;
+  --terra:         #8A5A34;
+  --terra-escura:  #6B4423;
+  --vermelho:      #A63A32;
+  --vermelho-esc:  #822B26;
+  --dourado:       #D6A24A;
+  --dourado-claro: #E8C578;
+  --verde:         #3E6B4F;
+  --verde-esc:     #2C4E38;
+  --laranja:       #C77B34;
+  --creme:         #F2E9DA;
+  --creme-2:       #E8DAC0;
+  --texto-claro:   #F6EFE2;
+  --texto-escuro:  #241C14;
+  --sombra:        rgba(20, 14, 6, 0.35);
+
+  --fonte-display: 'Fraunces', serif;
+  --fonte-corpo:   'Work Sans', sans-serif;
+
+  --raio: 18px;
+  --raio-peq: 10px;
+}
+
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; }
+body{
+  font-family:var(--fonte-corpo);
+  background:var(--grafite);
+  color:var(--texto-claro);
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{ font-family:var(--fonte-display); margin:0; }
+p{ margin:0; }
+button{ font-family:var(--fonte-corpo); cursor:pointer; border:none; }
+button:focus-visible, [tabindex]:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible{
+  outline:3px solid var(--dourado-claro);
+  outline-offset:2px;
+}
+::selection{ background:var(--dourado); color:var(--texto-escuro); }
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
+}
+
+.app{ position:relative; min-height:100vh; overflow-x:hidden; }
+.tela{ display:none; min-height:100vh; }
+.tela.ativa{ display:block; }
+
+/* faixa ornamental repetida — motivo geométrico abstrato, não-figurativo */
+.faixa-padrao{
+  height:14px;
+  width:100%;
+  background:
+    repeating-linear-gradient(45deg,
+      var(--dourado) 0 10px,
+      var(--vermelho) 10px 20px,
+      var(--verde) 20px 30px,
+      var(--terra) 30px 40px);
+}
+
+/* ======================================================
+   2. TELA INICIAL
+   ====================================================== */
+.inicio{
+  position:relative;
+  min-height:100vh;
+  display:flex;
+  align-items:stretch;
+  background:
+    radial-gradient(ellipse 900px 700px at 82% -10%, rgba(214,162,74,0.16), transparent 60%),
+    linear-gradient(180deg, var(--grafite) 0%, var(--grafite-2) 100%);
+}
+.inicio-conteudo{
+  flex:1 1 60%;
+  padding:clamp(28px,6vw,88px) clamp(24px,6vw,80px);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:28px;
+  max-width:760px;
+}
+.selo{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  align-self:flex-start;
+  padding:8px 16px 8px 10px;
+  border-radius:999px;
+  background:var(--grafite-3);
+  border:1px solid rgba(214,162,74,0.35);
+  color:var(--dourado-claro);
+  font-size:0.86rem;
+  font-weight:600;
+  letter-spacing:0.01em;
+}
+.selo .ponto{ width:8px; height:8px; border-radius:50%; background:var(--vermelho); }
+.inicio h1{
+  font-size:clamp(2.6rem, 6vw, 4.4rem);
+  line-height:1.02;
+  font-weight:600;
+  color:var(--texto-claro);
+}
+.inicio h1 em{
+  font-style:normal;
+  color:var(--dourado-claro);
+}
+.inicio .subtitulo{
+  font-size:clamp(1.05rem, 1.6vw, 1.25rem);
+  line-height:1.55;
+  color:var(--creme-2);
+  max-width:56ch;
+}
+.botoes-inicio{ display:flex; gap:16px; flex-wrap:wrap; margin-top:6px; }
+.btn{
+  padding:15px 26px;
+  border-radius:999px;
+  font-weight:600;
+  font-size:1rem;
+  transition:transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+}
+.btn:hover{ transform:translateY(-2px); }
+.btn:active{ transform:translateY(0); }
+.btn-primario{
+  background:var(--vermelho);
+  color:var(--texto-claro);
+  box-shadow:0 10px 26px -8px rgba(166,58,50,0.55);
+}
+.btn-primario:hover{ background:var(--vermelho-esc); }
+.btn-secundario{
+  background:transparent;
+  color:var(--dourado-claro);
+  border:1.5px solid rgba(214,162,74,0.55);
+}
+.btn-secundario:hover{ background:rgba(214,162,74,0.1); }
+.btn-dourado{
+  background:var(--dourado);
+  color:var(--texto-escuro);
+  box-shadow:0 10px 26px -8px rgba(214,162,74,0.5);
+}
+.btn-dourado:hover{ background:var(--dourado-claro); }
+.btn-verde{ background:var(--verde); color:var(--texto-claro); }
+.btn-verde:hover{ background:var(--verde-esc); }
+.btn-fantasma{
+  background:rgba(255,255,255,0.06);
+  color:var(--creme);
+}
+.btn-fantasma:hover{ background:rgba(255,255,255,0.12); }
+.btn-pequeno{ padding:9px 16px; font-size:0.86rem; border-radius:10px; }
+.btn:disabled{ opacity:0.45; cursor:not-allowed; transform:none; }
+
+.significado{
+  margin-top:18px;
+  padding:22px 24px;
+  border-radius:var(--raio);
+  background:rgba(255,255,255,0.045);
+  border-left:4px solid var(--dourado);
+  max-width:60ch;
+}
+.significado h3{ font-size:1.05rem; color:var(--dourado-claro); margin-bottom:8px; font-weight:600; }
+.significado p{ color:var(--creme-2); line-height:1.6; font-size:0.96rem; }
+
+.inicio-visual{
+  flex:1 1 40%;
+  position:relative;
+  min-width:0;
+  display:none;
+}
+@media (min-width:900px){ .inicio-visual{ display:block; } }
+.padrao-geo{
+  position:absolute; inset:0;
+  background:
+    linear-gradient(135deg, var(--terra-escura) 0%, var(--terra) 100%);
+  overflow:hidden;
+}
+.padrao-geo svg{ position:absolute; inset:0; width:100%; height:100%; }
+.padrao-geo .numero-grande{
+  position:absolute;
+  bottom:38px; left:38px;
+  font-family:var(--fonte-display);
+  font-weight:700;
+  font-size:clamp(4rem,9vw,7rem);
+  color:rgba(246,239,226,0.92);
+  line-height:0.85;
+}
+.padrao-geo .numero-grande span{
+  display:block;
+  font-size:1.1rem;
+  font-weight:500;
+  font-family:var(--fonte-corpo);
+  letter-spacing:0.02em;
+  color:rgba(246,239,226,0.75);
+  margin-top:8px;
+}
+
+/* ======================================================
+   3. CABEÇALHO INTERNO (usado no gerenciador/formulário/resultado)
+   ====================================================== */
+.cabecalho-interno{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  flex-wrap:wrap;
+  padding:22px clamp(20px,4vw,48px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  background:var(--grafite-2);
+}
+.cabecalho-interno h2{ font-size:1.5rem; color:var(--texto-claro); font-weight:600; }
+.cabecalho-interno .voltar{
+  color:var(--dourado-claro);
+  background:none;
+  font-weight:600;
+  font-size:0.92rem;
+  padding:8px 4px;
+  display:inline-flex; align-items:center; gap:6px;
+}
+.container-interno{
+  max-width:980px;
+  margin:0 auto;
+  padding:clamp(24px,4vw,44px) clamp(20px,4vw,32px) 80px;
+}
+
+/* ======================================================
+   4. GERENCIADOR DE QUESTÕES
+   ====================================================== */
+.gerenciador-topo{
+  display:flex; justify-content:space-between; align-items:center; gap:16px;
+  flex-wrap:wrap; margin-bottom:26px;
+}
+.gerenciador-topo .info-total{ color:var(--creme-2); font-size:0.92rem; }
+.lista-questoes{ display:flex; flex-direction:column; gap:14px; }
+.card-questao{
+  background:var(--grafite-2);
+  border:1px solid rgba(255,255,255,0.07);
+  border-radius:var(--raio);
+  padding:18px 20px;
+  display:flex; align-items:flex-start; gap:16px;
+  transition:border-color 0.15s ease;
+}
+.card-questao:hover{ border-color:rgba(214,162,74,0.4); }
+.card-questao .numero{
+  flex:0 0 auto;
+  width:34px; height:34px; border-radius:50%;
+  background:var(--terra);
+  display:flex; align-items:center; justify-content:center;
+  font-weight:700; font-family:var(--fonte-display); font-size:1rem;
+  color:var(--texto-claro);
+}
+.card-questao .corpo{ flex:1 1 auto; min-width:0; }
+.card-questao .texto-pergunta{
+  font-size:1rem; font-weight:600; color:var(--texto-claro);
+  margin-bottom:8px; line-height:1.4;
+  overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
+}
+.card-questao .meta-linha{ display:flex; gap:14px; flex-wrap:wrap; font-size:0.82rem; color:var(--creme-2); }
+.card-questao .meta-linha .certa{ color:var(--verde); font-weight:600; }
+.card-questao .meta-linha .certa::before{ content:"✓ "; }
+.card-questao .acoes{ display:flex; gap:8px; flex-wrap:wrap; flex:0 0 auto; }
+.icone-btn{
+  width:36px; height:36px; border-radius:9px;
+  background:rgba(255,255,255,0.06);
+  color:var(--creme);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1rem;
+  transition:background 0.15s ease;
+}
+.icone-btn:hover{ background:rgba(255,255,255,0.14); }
+.icone-btn.excluir:hover{ background:rgba(166,58,50,0.35); color:#ffd9d5; }
+.icone-btn.editar:hover{ background:rgba(214,162,74,0.3); color:var(--dourado-claro); }
+.estado-vazio{
+  text-align:center; padding:60px 20px; color:var(--creme-2);
+  border:1.5px dashed rgba(255,255,255,0.14); border-radius:var(--raio);
+}
+.estado-vazio h3{ color:var(--texto-claro); margin-bottom:10px; font-size:1.2rem; }
+
+/* ======================================================
+   5. FORMULÁRIO DE QUESTÃO
+   ====================================================== */
+.formulario{
+  background:var(--grafite-2);
+  border-radius:var(--raio);
+  padding:clamp(20px,4vw,34px);
+  border:1px solid rgba(255,255,255,0.08);
+}
+.campo{ margin-bottom:20px; }
+.campo label{
+  display:block; font-size:0.88rem; font-weight:600;
+  color:var(--dourado-claro); margin-bottom:8px;
+}
+.campo .dica{ font-weight:400; color:var(--creme-2); font-size:0.8rem; margin-left:6px; }
+.campo textarea, .campo input[type="text"], .campo input[type="number"]{
+  width:100%;
+  background:var(--grafite);
+  border:1.5px solid rgba(255,255,255,0.14);
+  border-radius:var(--raio-peq);
+  padding:13px 14px;
+  color:var(--texto-claro);
+  font-family:var(--fonte-corpo);
+  font-size:0.98rem;
+  resize:vertical;
+}
+.campo textarea:focus, .campo input:focus{ border-color:var(--dourado); }
+.grade-alternativas{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+@media (max-width:640px){ .grade-alternativas{ grid-template-columns:1fr; } }
+.linha-alternativa{
+  display:flex; align-items:center; gap:10px;
+  background:var(--grafite);
+  border:1.5px solid rgba(255,255,255,0.14);
+  border-radius:var(--raio-peq);
+  padding:6px 6px 6px 14px;
+}
+.linha-alternativa.correta{ border-color:var(--verde); box-shadow:0 0 0 1px var(--verde) inset; }
+.linha-alternativa .letra{
+  flex:0 0 auto; width:26px; height:26px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:0.78rem; font-weight:700; color:var(--texto-escuro);
+}
+.linha-alternativa input[type="text"]{ border:none; background:transparent; padding:10px 6px; }
+.linha-alternativa input[type="radio"]{ width:19px; height:19px; accent-color:var(--verde); flex:0 0 auto; margin-right:2px; }
+.linha-tempo{ display:flex; align-items:center; gap:14px; max-width:280px; }
+.linha-tempo input[type="number"]{ width:100px; }
+.rodape-formulario{ display:flex; gap:12px; margin-top:8px; flex-wrap:wrap; }
+.erro-campo{ color:#ffb4ac; font-size:0.82rem; margin-top:8px; display:none; }
+.erro-campo.mostrar{ display:block; }
+
+/* Modal de prévia */
+.sobreposicao{
+  position:fixed; inset:0; background:rgba(10,7,4,0.72);
+  display:none; align-items:center; justify-content:center; padding:20px; z-index:50;
+}
+.sobreposicao.ativa{ display:flex; }
+.modal-previa{
+  background:var(--grafite-2); border-radius:var(--raio); max-width:560px; width:100%;
+  padding:26px; border:1px solid rgba(214,162,74,0.3); max-height:90vh; overflow:auto;
+}
+.modal-previa .fechar-previa{ float:right; background:none; color:var(--creme-2); font-size:1.3rem; line-height:1; }
+
+/* ======================================================
+   6. TELA DO QUIZ
+   ====================================================== */
+.quiz-tela{
+  min-height:100vh;
+  background:linear-gradient(180deg, var(--grafite) 0%, #221A12 100%);
+  display:flex; flex-direction:column;
+}
+.quiz-topo{
+  padding:18px clamp(16px,4vw,40px) 0;
+}
+.quiz-info-linha{
+  display:flex; justify-content:space-between; align-items:center;
+  margin-bottom:10px; flex-wrap:wrap; gap:10px;
+}
+.quiz-pill{
+  background:var(--grafite-3); padding:7px 14px; border-radius:999px;
+  font-size:0.85rem; font-weight:600; color:var(--creme-2);
+}
+.quiz-pontuacao{
+  color:var(--dourado-claro); font-weight:700; font-size:1.05rem;
+  font-family:var(--fonte-display);
+}
+.barra-progresso{
+  height:7px; border-radius:999px; background:rgba(255,255,255,0.09); overflow:hidden;
+}
+.barra-progresso .preenchimento{
+  height:100%; background:linear-gradient(90deg, var(--dourado), var(--verde));
+  border-radius:999px; transition:width 0.3s ease;
+}
+.quiz-corpo{
+  flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding:24px clamp(16px,4vw,40px) 40px; gap:26px;
+}
+.temporizador{
+  width:74px; height:74px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--fonte-display); font-weight:700; font-size:1.5rem;
+  color:var(--texto-claro);
+  background:conic-gradient(var(--dourado) calc(var(--pct,100)*1%), rgba(255,255,255,0.1) 0);
+  position:relative;
+}
+.temporizador::before{
+  content:""; position:absolute; inset:6px; border-radius:50%; background:var(--grafite-2);
+}
+.temporizador span{ position:relative; z-index:1; }
+.temporizador.urgente{ animation:pulsar 0.6s ease infinite; }
+@keyframes pulsar{ 0%,100%{ transform:scale(1);} 50%{ transform:scale(1.06);} }
+
+.cartao-pergunta{
+  max-width:760px; width:100%;
+  background:var(--grafite-2);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:var(--raio);
+  padding:clamp(24px,4vw,40px);
+  text-align:center;
+  box-shadow:0 24px 50px -20px rgba(0,0,0,0.5);
+}
+.cartao-pergunta .rotulo-topico{
+  font-size:0.82rem; color:var(--dourado-claro); font-weight:600; margin-bottom:14px;
+}
+.cartao-pergunta h2{
+  font-size:clamp(1.3rem, 2.6vw, 1.9rem); line-height:1.35; font-weight:600; color:var(--texto-claro);
+}
+
+.grade-respostas{
+  display:grid; grid-template-columns:1fr 1fr; gap:16px;
+  max-width:760px; width:100%;
+}
+@media (max-width:640px){ .grade-respostas{ grid-template-columns:1fr; } }
+.opcao-resposta{
+  display:flex; align-items:center; gap:12px;
+  padding:20px 20px; border-radius:14px;
+  font-size:1.02rem; font-weight:600; text-align:left;
+  color:var(--texto-claro);
+  transition:transform 0.12s ease, filter 0.12s ease, box-shadow 0.12s ease;
+  min-height:64px;
+}
+.opcao-resposta:hover:not(:disabled){ transform:translateY(-2px); filter:brightness(1.08); }
+.opcao-resposta:disabled{ cursor:default; }
+.opcao-resposta .marca{
+  flex:0 0 auto; width:30px; height:30px; border-radius:8px;
+  background:rgba(0,0,0,0.18);
+  display:flex; align-items:center; justify-content:center;
+  font-weight:700; font-size:0.85rem;
+}
+.op-0{ background:var(--vermelho); }
+.op-1{ background:var(--verde); }
+.op-2{ background:var(--dourado); color:var(--texto-escuro); }
+.op-3{ background:var(--terra); }
+.op-2 .marca{ color:var(--texto-escuro); }
+.opcao-resposta.correta-marcada{ box-shadow:0 0 0 3px #7be0a0 inset; }
+.opcao-resposta.errada-marcada{ box-shadow:0 0 0 3px #ff9d94 inset; opacity:0.72; }
+.opcao-resposta.esmaecida{ opacity:0.35; }
+
+.feedback-resposta{
+  min-height:34px; font-weight:700; font-size:1.05rem;
+  display:flex; align-items:center; gap:8px;
+}
+.feedback-resposta.acerto{ color:#8fe3ab; }
+.feedback-resposta.erro{ color:#ff9d94; }
+
+/* ======================================================
+   7. TELA DE RESULTADO
+   ====================================================== */
+.resultado-tela{
+  min-height:100vh; display:flex; align-items:center; justify-content:center;
+  padding:40px 20px;
+  background:radial-gradient(ellipse 800px 600px at 50% 0%, rgba(62,107,79,0.18), transparent 60%), var(--grafite);
+  position:relative; overflow:hidden;
+}
+.cartao-resultado{
+  max-width:560px; width:100%; text-align:center;
+  background:var(--grafite-2); border:1px solid rgba(214,162,74,0.3);
+  border-radius:var(--raio); padding:clamp(30px,5vw,50px);
+  position:relative; z-index:2;
+}
+.cartao-resultado h2{ font-size:clamp(1.7rem,4vw,2.3rem); margin-bottom:6px; }
+.cartao-resultado .subt{ color:var(--creme-2); margin-bottom:26px; }
+.pontuacao-final{
+  font-family:var(--fonte-display); font-weight:700;
+  font-size:clamp(3rem,8vw,4.2rem); color:var(--dourado-claro); line-height:1;
+  margin-bottom:6px;
+}
+.grade-stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:26px 0; }
+.stat-item{ background:var(--grafite); border-radius:12px; padding:16px 10px; }
+.stat-item .valor{ font-family:var(--fonte-display); font-size:1.6rem; font-weight:700; }
+.stat-item.acertos .valor{ color:#8fe3ab; }
+.stat-item.erros .valor{ color:#ff9d94; }
+.stat-item.aproveitamento .valor{ color:var(--dourado-claro); }
+.stat-item .rotulo{ font-size:0.76rem; color:var(--creme-2); margin-top:4px; }
+.selo-classificacao{
+  display:inline-block; padding:9px 20px; border-radius:999px; font-weight:700;
+  font-size:0.9rem; margin-bottom:8px;
+}
+.confete{ position:absolute; top:-20px; border-radius:2px; z-index:1; }
+
+/* ======================================================
+   8. TOAST / AVISOS
+   ====================================================== */
+.toast{
+  position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px);
+  background:var(--verde-esc); color:var(--texto-claro);
+  padding:13px 22px; border-radius:999px; font-weight:600; font-size:0.9rem;
+  box-shadow:0 12px 30px -10px rgba(0,0,0,0.5);
+  opacity:0; pointer-events:none; transition:opacity 0.25s ease, transform 0.25s ease;
+  z-index:80;
+}
+.toast.mostrar{ opacity:1; transform:translateX(-50%) translateY(0); }
+.toast.erro{ background:var(--vermelho-esc); }
+
+.rodape-nota{
+  text-align:center; padding:20px; font-size:0.78rem; color:rgba(246,239,226,0.4);
+}
+@media (max-width:900px){
+  .inicio{ flex-direction:column; }
+  .botoes-inicio .btn{ flex:1 1 auto; justify-content:center; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ==================================================
+       TELA 1 — INÍCIO
+       ================================================== -->
+  <section id="tela-inicio" class="tela ativa">
+    <div class="inicio">
+      <div class="inicio-conteudo">
+        <div class="selo"><span class="ponto"></span>Quiz educativo</div>
+        <h1>55 anos do<br><em>20 de Novembro</em></h1>
+        <p class="subtitulo">Um quiz interativo sobre a história, a resistência e a cultura do povo negro no Brasil — para jogar em sala de aula, em eventos ou sozinho, com perguntas que você mesmo pode criar e editar.</p>
+        <div class="botoes-inicio">
+          <button class="btn btn-primario" id="btn-comecar-quiz">▶ Começar Quiz</button>
+          <button class="btn btn-secundario" id="btn-ir-gerenciar">✎ Criar / Editar Questões</button>
+        </div>
+        <div class="significado">
+          <h3>Por que 20 de novembro?</h3>
+          <p>A data relembra a morte de Zumbi dos Palmares, em 1695, líder do Quilombo dos Palmares — o maior e mais duradouro quilombo do Brasil colonial. Reconhecida nacionalmente pela Lei nº 12.519/2011 e declarada feriado nacional pela Lei nº 14.759/2023, a data celebra a resistência negra e convida à reflexão sobre a luta contra o racismo no Brasil de hoje.</p>
+        </div>
+      </div>
+      <div class="inicio-visual">
+        <div class="padrao-geo">
+          <svg viewBox="0 0 400 600" preserveAspectRatio="xMidYMid slice">
+            <rect x="0" y="0" width="400" height="600" fill="none"/>
+            <g opacity="0.9">
+              <polygon points="400,0 400,180 250,0" fill="#D6A24A" opacity="0.9"/>
+              <polygon points="400,180 400,340 300,180" fill="#A63A32" opacity="0.85"/>
+              <polygon points="120,600 260,600 190,470" fill="#3E6B4F" opacity="0.9"/>
+              <polygon points="0,600 140,600 0,430" fill="#D6A24A" opacity="0.75"/>
+              <circle cx="330" cy="120" r="46" fill="none" stroke="#F2E9DA" stroke-width="3" opacity="0.5"/>
+              <circle cx="330" cy="120" r="70" fill="none" stroke="#F2E9DA" stroke-width="2" opacity="0.28"/>
+              <g stroke="#F2E9DA" stroke-width="2" opacity="0.35">
+                <line x1="40" y1="260" x2="120" y2="260"/>
+                <line x1="40" y1="280" x2="140" y2="280"/>
+                <line x1="40" y1="300" x2="100" y2="300"/>
+              </g>
+              <polygon points="40,360 90,420 40,480 -10,420" fill="#F2E9DA" opacity="0.14"/>
+              <polygon points="140,400 175,450 140,500 105,450" fill="#F2E9DA" opacity="0.14"/>
+            </g>
+          </svg>
+          <div class="numero-grande">55<span>anos de memória<br>e resistência</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="faixa-padrao"></div>
+  </section>
+
+  <!-- ==================================================
+       TELA 2 — GERENCIADOR DE QUESTÕES
+       ================================================== -->
+  <section id="tela-gerenciar" class="tela">
+    <div class="cabecalho-interno">
+      <button class="voltar" id="btn-voltar-inicio-1">← Início</button>
+      <h2>Gerenciar Questões</h2>
+      <button class="btn btn-dourado btn-pequeno" id="btn-nova-questao">+ Nova Questão</button>
+    </div>
+    <div class="container-interno">
+      <div class="gerenciador-topo">
+        <span class="info-total" id="info-total-questoes"></span>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn btn-fantasma btn-pequeno" id="btn-testar-quiz">▶ Testar Quiz</button>
+          <button class="btn btn-fantasma btn-pequeno" id="btn-restaurar-padrao">↺ Restaurar exemplos</button>
+        </div>
+      </div>
+      <div class="lista-questoes" id="lista-questoes"></div>
+    </div>
+  </section>
+
+  <!-- ==================================================
+       TELA 3 — FORMULÁRIO (criar / editar)
+       ================================================== -->
+  <section id="tela-formulario" class="tela">
+    <div class="cabecalho-interno">
+      <button class="voltar" id="btn-voltar-gerenciar-1">← Cancelar</button>
+      <h2 id="titulo-formulario">Nova Questão</h2>
+      <span></span>
+    </div>
+    <div class="container-interno" style="max-width:760px;">
+      <div class="formulario">
+        <div class="campo">
+          <label for="campo-pergunta">Pergunta</label>
+          <textarea id="campo-pergunta" rows="3" placeholder="Digite o texto da pergunta..."></textarea>
+        </div>
+
+        <div class="campo">
+          <label>Alternativas <span class="dica">selecione o botão à esquerda da alternativa correta</span></label>
+          <div class="grade-alternativas" id="grade-alternativas">
+            <!-- linhas geradas via JS -->
+          </div>
+        </div>
+
+        <div class="campo linha-tempo">
+          <label for="campo-tempo" style="margin-bottom:0;">Tempo de resposta</label>
+          <input type="number" id="campo-tempo" min="5" max="120" value="30">
+          <span class="dica">segundos</span>
+        </div>
+
+        <p class="erro-campo" id="erro-formulario"></p>
+
+        <div class="rodape-formulario">
+          <button class="btn btn-verde" id="btn-salvar-questao">Salvar Questão</button>
+          <button class="btn btn-fantasma" id="btn-cancelar-questao">Cancelar</button>
+          <button class="btn btn-secundario" id="btn-previa-questao" style="margin-left:auto;">👁 Prévia</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================
+       TELA 4 — QUIZ
+       ================================================== -->
+  <section id="tela-quiz" class="tela">
+    <div class="quiz-tela">
+      <div class="quiz-topo">
+        <div class="quiz-info-linha">
+          <span class="quiz-pill" id="quiz-numero-atual">Questão 1 de 10</span>
+          <span class="quiz-pontuacao" id="quiz-pontuacao-atual">0 pontos</span>
+        </div>
+        <div class="barra-progresso"><div class="preenchimento" id="barra-progresso-preenchimento"></div></div>
+      </div>
+      <div class="quiz-corpo">
+        <div class="temporizador" id="temporizador"><span id="temporizador-numero">30</span></div>
+        <div class="cartao-pergunta">
+          <div class="rotulo-topico" id="quiz-topico">HISTÓRIA</div>
+          <h2 id="quiz-texto-pergunta">Texto da pergunta</h2>
+        </div>
+        <div class="grade-respostas" id="grade-respostas"></div>
+        <div class="feedback-resposta" id="feedback-resposta"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================
+       TELA 5 — RESULTADO
+       ================================================== -->
+  <section id="tela-resultado" class="tela">
+    <div class="resultado-tela" id="resultado-tela">
+      <div class="cartao-resultado">
+        <span class="selo-classificacao" id="selo-classificacao">Muito bem!</span>
+        <h2>Quiz concluído!</h2>
+        <p class="subt">Veja como você se saiu:</p>
+        <div class="pontuacao-final" id="pontuacao-final">0</div>
+        <p class="subt" style="margin-bottom:0;">pontos</p>
+        <div class="grade-stats">
+          <div class="stat-item acertos"><div class="valor" id="stat-acertos">0</div><div class="rotulo">Acertos</div></div>
+          <div class="stat-item erros"><div class="valor" id="stat-erros">0</div><div class="rotulo">Erros</div></div>
+          <div class="stat-item aproveitamento"><div class="valor" id="stat-aproveitamento">0%</div><div class="rotulo">Aproveitamento</div></div>
+        </div>
+        <div class="rodape-formulario" style="justify-content:center;">
+          <button class="btn btn-primario" id="btn-jogar-novamente">↻ Jogar novamente</button>
+          <button class="btn btn-fantasma" id="btn-resultado-inicio">Início</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal de prévia -->
+  <div class="sobreposicao" id="sobreposicao-previa">
+    <div class="modal-previa">
+      <button class="fechar-previa" id="fechar-previa">×</button>
+      <div class="rotulo-topico" style="color:var(--dourado);">PRÉVIA</div>
+      <h2 id="previa-pergunta" style="font-family:var(--fonte-display);font-size:1.4rem;margin:10px 0 18px;"></h2>
+      <div id="previa-alternativas" style="display:flex;flex-direction:column;gap:10px;"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+</div>
+
+<script>
+/* ============================================================
+   1. DADOS — banco de questões padrão (usado apenas na primeira
+      vez, ou ao "Restaurar exemplos"). Baseado em fatos históricos
+      verificáveis (Lei 12.519/2011, Lei 14.759/2023, e história
+      de Zumbi e do Quilombo dos Palmares).
+   ============================================================ */
+function questoesPadrao(){
+  return [
+    {
+      id: gerarId(), topico: "Significado",
+      pergunta: "Qual é a importância do dia 20 de novembro?",
+      alternativas: [
+        "Celebrar exclusivamente uma data religiosa",
+        "Reconhecer a história, a resistência e a contribuição da população negra no Brasil",
+        "Comemorar a independência do Brasil",
+        "Celebrar o início do Carnaval"
+      ], correta: 1, tempo: 30
+    },
+    {
+      id: gerarId(), topico: "História",
+      pergunta: "O que o dia 20 de novembro relembra, historicamente?",
+      alternativas: [
+        "A assinatura da Lei Áurea",
+        "A morte de Zumbi dos Palmares, em 1695",
+        "A chegada dos primeiros portugueses ao Brasil",
+        "A proclamação da República"
+      ], correta: 1, tempo: 25
+    },
+    {
+      id: gerarId(), topico: "Personalidades",
+      pergunta: "Quem foi Zumbi dos Palmares?",
+      alternativas: [
+        "Um governador colonial português",
+        "O último grande líder do Quilombo dos Palmares",
+        "Um escritor do século XIX",
+        "Um rei africano que nunca esteve no Brasil"
+      ], correta: 1, tempo: 25
+    },
+    {
+      id: gerarId(), topico: "História",
+      pergunta: "O que foi o Quilombo dos Palmares?",
+      alternativas: [
+        "Uma vila portuguesa fundada no litoral",
+        "O maior e mais duradouro quilombo do Brasil colonial, formado por pessoas escravizadas fugidas",
+        "Uma fortaleza militar holandesa",
+        "Um bairro fundado após a Abolição"
+      ], correta: 1, tempo: 30
+    },
+    {
+      id: gerarId(), topico: "Legislação",
+      pergunta: "Em que ano uma lei federal instituiu nacionalmente o 'Dia Nacional de Zumbi e da Consciência Negra'?",
+      alternativas: ["1988", "1995", "2011", "2020"],
+      correta: 2, tempo: 30
+    },
+    {
+      id: gerarId(), topico: "Legislação",
+      pergunta: "O que a Lei nº 14.759, de 2023, estabeleceu sobre o 20 de novembro?",
+      alternativas: [
+        "Criou o nome 'Dia da Consciência Negra'",
+        "Declarou o dia feriado nacional",
+        "Proibiu comemorações em escolas",
+        "Transferiu a data para maio"
+      ], correta: 1, tempo: 30
+    },
+    {
+      id: gerarId(), topico: "Cultura",
+      pergunta: "Qual dessas manifestações culturais tem raízes na herança africana no Brasil?",
+      alternativas: ["Capoeira", "Fado", "Flamenco", "Tango"],
+      correta: 0, tempo: 25
+    },
+    {
+      id: gerarId(), topico: "Personalidades",
+      pergunta: "Carolina Maria de Jesus, escritora negra brasileira, ficou conhecida por qual obra?",
+      alternativas: [
+        "Dom Casmurro",
+        "Quarto de Despejo: Diário de uma Favelada",
+        "Grande Sertão: Veredas",
+        "Vidas Secas"
+      ], correta: 1, tempo: 30
+    },
+    {
+      id: gerarId(), topico: "Movimento negro",
+      pergunta: "O Movimento Negro Unificado (MNU), importante organização de luta antirracista, foi fundado em que década?",
+      alternativas: ["1950", "1960", "1970", "1990"],
+      correta: 2, tempo: 30
+    },
+    {
+      id: gerarId(), topico: "Sociedade",
+      pergunta: "O que caracteriza o chamado 'racismo estrutural'?",
+      alternativas: [
+        "Ofensas isoladas entre indivíduos",
+        "Um problema restrito a outros países",
+        "Desigualdades raciais reproduzidas pelas instituições e estruturas da sociedade",
+        "Um conceito sem relação com o mercado de trabalho ou a educação"
+      ], correta: 2, tempo: 35
+    }
+  ];
+}
+
+function gerarId(){
+  return 'q_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2,8);
+}
+
+/* ============================================================
+   2. ARMAZENAMENTO — persistência entre sessões
+   ============================================================
+   Usamos localStorage do navegador para que as questões
+   criadas/editadas continuem disponíveis mesmo depois de
+   atualizar a página (F5) ou fechar e reabrir o arquivo.
+   As funções continuam "async" para não precisar mudar o
+   restante do código, que já usa await para chamá-las.
+*/
+const CHAVE_QUESTOES = "questoes-20-de-novembro";
+
+async function carregarQuestoes(){
+  try{
+    const bruto = localStorage.getItem(CHAVE_QUESTOES);
+    if(bruto){
+      const dados = JSON.parse(bruto);
+      if(Array.isArray(dados) && dados.length > 0) return dados;
+    }
+  }catch(e){
+    // dado corrompido ou localStorage indisponível — segue com os padrões
+  }
+  const padrao = questoesPadrao();
+  await salvarQuestoes(padrao);
+  return padrao;
+}
+
+async function salvarQuestoes(lista){
+  try{
+    localStorage.setItem(CHAVE_QUESTOES, JSON.stringify(lista));
+    return true;
+  }catch(e){
+    mostrarToast("Não foi possível salvar agora. Suas alterações valem só para esta sessão.", true);
+    return false;
+  }
+}
+
+/* ============================================================
+   3. ESTADO DA APLICAÇÃO
+   ============================================================ */
+const estado = {
+  questoes: [],
+  editandoId: null,
+  quiz: {
+    ordem: [],
+    indice: 0,
+    pontuacao: 0,
+    acertos: 0,
+    erros: 0,
+    tempoRestante: 0,
+    tempoTotal: 0,
+    timerId: null,
+    respondeu: false
+  }
+};
+
+/* ============================================================
+   4. NAVEGAÇÃO ENTRE TELAS
+   ============================================================ */
+function irPara(idTela){
+  document.querySelectorAll('.tela').forEach(t => t.classList.remove('ativa'));
+  document.getElementById(idTela).classList.add('ativa');
+  window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
+}
+
+function mostrarToast(mensagem, ehErro){
+  const toast = document.getElementById('toast');
+  toast.textContent = mensagem;
+  toast.classList.toggle('erro', !!ehErro);
+  toast.classList.add('mostrar');
+  clearTimeout(toast._timeoutId);
+  toast._timeoutId = setTimeout(()=> toast.classList.remove('mostrar'), 2600);
+}
+
+/* ============================================================
+   5. GERENCIADOR DE QUESTÕES (CRUD)
+   ============================================================ */
+function renderizarLista(){
+  const lista = document.getElementById('lista-questoes');
+  const total = estado.questoes.length;
+  document.getElementById('info-total-questoes').textContent =
+    total === 0 ? "Nenhuma questão cadastrada" : `${total} questão${total>1?'ões':''} cadastrada${total>1?'s':''}`;
+  document.getElementById('btn-testar-quiz').disabled = total === 0;
+
+  if(total === 0){
+    lista.innerHTML = `<div class="estado-vazio"><h3>Nenhuma questão por aqui ainda</h3><p>Clique em "+ Nova Questão" para começar a montar seu banco de perguntas.</p></div>`;
+    return;
+  }
+
+  lista.innerHTML = estado.questoes.map((q, i) => `
+    <div class="card-questao" data-id="${q.id}">
+      <div class="numero">${i+1}</div>
+      <div class="corpo">
+        <div class="texto-pergunta">${escaparHtml(q.pergunta)}</div>
+        <div class="meta-linha">
+          <span class="certa">${escaparHtml(q.alternativas[q.correta] || '')}</span>
+          <span>⏱ ${q.tempo}s</span>
+          <span>${escaparHtml(q.topico || 'Geral')}</span>
+        </div>
+      </div>
+      <div class="acoes">
+        <button class="icone-btn" title="Mover para cima" data-acao="subir">↑</button>
+        <button class="icone-btn" title="Mover para baixo" data-acao="descer">↓</button>
+        <button class="icone-btn" title="Prévia" data-acao="previa">👁</button>
+        <button class="icone-btn editar" title="Editar" data-acao="editar">✎</button>
+        <button class="icone-btn" title="Duplicar" data-acao="duplicar">⧉</button>
+        <button class="icone-btn excluir" title="Excluir" data-acao="excluir">🗑</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function escaparHtml(texto){
+  const div = document.createElement('div');
+  div.textContent = texto || '';
+  return div.innerHTML;
+}
+
+document.getElementById('lista-questoes').addEventListener('click', async (ev)=>{
+  const botao = ev.target.closest('[data-acao]');
+  if(!botao) return;
+  const card = ev.target.closest('.card-questao');
+  const id = card.dataset.id;
+  const indice = estado.questoes.findIndex(q => q.id === id);
+  if(indice === -1) return;
+  const acao = botao.dataset.acao;
+
+  if(acao === 'editar'){ abrirFormulario(id); }
+  else if(acao === 'previa'){ abrirPrevia(estado.questoes[indice]); }
+  else if(acao === 'duplicar'){
+    const copia = JSON.parse(JSON.stringify(estado.questoes[indice]));
+    copia.id = gerarId();
+    copia.pergunta = copia.pergunta + " (cópia)";
+    estado.questoes.splice(indice+1, 0, copia);
+    await salvarQuestoes(estado.questoes);
+    renderizarLista();
+    mostrarToast("Questão duplicada.");
+  }
+  else if(acao === 'excluir'){
+    if(confirm("Excluir esta questão? Essa ação não pode ser desfeita.")){
+      estado.questoes.splice(indice, 1);
+      await salvarQuestoes(estado.questoes);
+      renderizarLista();
+      mostrarToast("Questão excluída.");
+    }
+  }
+  else if(acao === 'subir' && indice > 0){
+    [estado.questoes[indice-1], estado.questoes[indice]] = [estado.questoes[indice], estado.questoes[indice-1]];
+    await salvarQuestoes(estado.questoes);
+    renderizarLista();
+  }
+  else if(acao === 'descer' && indice < estado.questoes.length-1){
+    [estado.questoes[indice+1], estado.questoes[indice]] = [estado.questoes[indice], estado.questoes[indice+1]];
+    await salvarQuestoes(estado.questoes);
+    renderizarLista();
+  }
+});
+
+document.getElementById('btn-nova-questao').addEventListener('click', ()=> abrirFormulario(null));
+document.getElementById('btn-ir-gerenciar').addEventListener('click', ()=>{ renderizarLista(); irPara('tela-gerenciar'); });
+document.getElementById('btn-voltar-inicio-1').addEventListener('click', ()=> irPara('tela-inicio'));
+document.getElementById('btn-testar-quiz').addEventListener('click', iniciarQuiz);
+document.getElementById('btn-restaurar-padrao').addEventListener('click', async ()=>{
+  if(confirm("Isso substituirá TODAS as questões atuais pelas 10 questões de exemplo. Continuar?")){
+    estado.questoes = questoesPadrao();
+    await salvarQuestoes(estado.questoes);
+    renderizarLista();
+    mostrarToast("Questões de exemplo restauradas.");
+  }
+});
+
+/* ============================================================
+   6. FORMULÁRIO DE QUESTÃO
+   ============================================================ */
+const CORES_LETRA = ['op-0','op-1','op-2','op-3'];
+const LETRAS = ['A','B','C','D'];
+
+function montarGradeAlternativas(){
+  const grade = document.getElementById('grade-alternativas');
+  grade.innerHTML = LETRAS.map((letra, i) => `
+    <div class="linha-alternativa" data-linha="${i}">
+      <input type="radio" name="alternativa-correta" value="${i}" id="radio-alt-${i}">
+      <span class="letra ${CORES_LETRA[i]}">${letra}</span>
+      <input type="text" id="input-alt-${i}" placeholder="Alternativa ${letra}">
+    </div>
+  `).join('');
+
+  grade.querySelectorAll('input[type="radio"]').forEach(r=>{
+    r.addEventListener('change', atualizarDestaqueCorreta);
+  });
+}
+function atualizarDestaqueCorreta(){
+  document.querySelectorAll('.linha-alternativa').forEach((linha, i)=>{
+    const radio = document.getElementById('radio-alt-'+i);
+    linha.classList.toggle('correta', radio.checked);
+  });
+}
+
+function abrirFormulario(id){
+  estado.editandoId = id;
+  document.getElementById('erro-formulario').classList.remove('mostrar');
+  montarGradeAlternativas();
+
+  if(id){
+    const q = estado.questoes.find(q => q.id === id);
+    document.getElementById('titulo-formulario').textContent = "Editar Questão";
+    document.getElementById('campo-pergunta').value = q.pergunta;
+    q.alternativas.forEach((a,i)=> document.getElementById('input-alt-'+i).value = a);
+    document.getElementById('radio-alt-'+q.correta).checked = true;
+    document.getElementById('campo-tempo').value = q.tempo;
+  } else {
+    document.getElementById('titulo-formulario').textContent = "Nova Questão";
+    document.getElementById('campo-pergunta').value = "";
+    document.getElementById('campo-tempo').value = 30;
+  }
+  atualizarDestaqueCorreta();
+  irPara('tela-formulario');
+}
+
+function lerFormulario(){
+  const pergunta = document.getElementById('campo-pergunta').value.trim();
+  const alternativas = [0,1,2,3].map(i => document.getElementById('input-alt-'+i).value.trim());
+  const radioMarcado = document.querySelector('input[name="alternativa-correta"]:checked');
+  const tempo = parseInt(document.getElementById('campo-tempo').value, 10);
+  return { pergunta, alternativas, correta: radioMarcado ? parseInt(radioMarcado.value,10) : null, tempo };
+}
+
+function validarFormulario(dados){
+  if(!dados.pergunta) return "Digite o texto da pergunta.";
+  if(dados.alternativas.some(a => !a)) return "Preencha as quatro alternativas.";
+  if(dados.correta === null) return "Selecione qual alternativa é a correta.";
+  if(!dados.tempo || dados.tempo < 5 || dados.tempo > 120) return "Defina um tempo entre 5 e 120 segundos.";
+  return null;
+}
+
+document.getElementById('btn-salvar-questao').addEventListener('click', async ()=>{
+  const dados = lerFormulario();
+  const erro = validarFormulario(dados);
+  const elErro = document.getElementById('erro-formulario');
+  if(erro){ elErro.textContent = erro; elErro.classList.add('mostrar'); return; }
+  elErro.classList.remove('mostrar');
+
+  if(estado.editandoId){
+    const q = estado.questoes.find(q => q.id === estado.editandoId);
+    q.pergunta = dados.pergunta;
+    q.alternativas = dados.alternativas;
+    q.correta = dados.correta;
+    q.tempo = dados.tempo;
+  } else {
+    estado.questoes.push({
+      id: gerarId(), topico: "Geral",
+      pergunta: dados.pergunta, alternativas: dados.alternativas,
+      correta: dados.correta, tempo: dados.tempo
+    });
+  }
+  await salvarQuestoes(estado.questoes);
+  renderizarLista();
+  mostrarToast(estado.editandoId ? "Alterações salvas." : "Questão criada.");
+  irPara('tela-gerenciar');
+});
+
+document.getElementById('btn-cancelar-questao').addEventListener('click', ()=> irPara('tela-gerenciar'));
+document.getElementById('btn-voltar-gerenciar-1').addEventListener('click', ()=> irPara('tela-gerenciar'));
+
+document.getElementById('btn-previa-questao').addEventListener('click', ()=>{
+  const dados = lerFormulario();
+  if(!dados.pergunta || dados.alternativas.some(a=>!a) || dados.correta===null){
+    mostrarToast("Preencha a pergunta, as alternativas e marque a correta para ver a prévia.", true);
+    return;
+  }
+  abrirPrevia({ pergunta: dados.pergunta, alternativas: dados.alternativas, correta: dados.correta });
+});
+
+function abrirPrevia(q){
+  document.getElementById('previa-pergunta').textContent = q.pergunta;
+  document.getElementById('previa-alternativas').innerHTML = q.alternativas.map((a,i)=>`
+    <div class="opcao-resposta ${CORES_LETRA[i]}" style="min-height:auto;padding:14px 16px;${i===q.correta?'box-shadow:0 0 0 3px #7be0a0 inset;':''}">
+      <span class="marca">${LETRAS[i]}</span><span>${escaparHtml(a)}</span>
+    </div>`).join('');
+  document.getElementById('sobreposicao-previa').classList.add('ativa');
+}
+document.getElementById('fechar-previa').addEventListener('click', ()=>{
+  document.getElementById('sobreposicao-previa').classList.remove('ativa');
+});
+document.getElementById('sobreposicao-previa').addEventListener('click', (ev)=>{
+  if(ev.target.id === 'sobreposicao-previa') ev.currentTarget.classList.remove('ativa');
+});
+
+/* ============================================================
+   7. LÓGICA DO QUIZ
+   ============================================================ */
+function embaralhar(array){
+  const copia = array.slice();
+  for(let i = copia.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i+1));
+    [copia[i], copia[j]] = [copia[j], copia[i]];
+  }
+  return copia;
+}
+
+document.getElementById('btn-comecar-quiz').addEventListener('click', iniciarQuiz);
+
+function iniciarQuiz(){
+  if(estado.questoes.length === 0){
+    mostrarToast("Crie ao menos uma questão antes de iniciar o quiz.", true);
+    irPara('tela-gerenciar');
+    return;
+  }
+  estado.quiz.ordem = embaralhar(estado.questoes);
+  estado.quiz.indice = 0;
+  estado.quiz.pontuacao = 0;
+  estado.quiz.acertos = 0;
+  estado.quiz.erros = 0;
+  irPara('tela-quiz');
+  exibirQuestaoAtual();
+}
+
+function exibirQuestaoAtual(){
+  const q = estado.quiz.ordem[estado.quiz.indice];
+  const total = estado.quiz.ordem.length;
+  estado.quiz.respondeu = false;
+
+  document.getElementById('quiz-numero-atual').textContent = `Questão ${estado.quiz.indice+1} de ${total}`;
+  document.getElementById('quiz-pontuacao-atual').textContent = `${estado.quiz.pontuacao} pontos`;
+  document.getElementById('barra-progresso-preenchimento').style.width =
+    `${Math.round((estado.quiz.indice / total) * 100)}%`;
+  document.getElementById('quiz-topico').textContent = (q.topico || 'GERAL').toUpperCase();
+  document.getElementById('quiz-texto-pergunta').textContent = q.pergunta;
+  document.getElementById('feedback-resposta').textContent = '';
+  document.getElementById('feedback-resposta').className = 'feedback-resposta';
+
+  const grade = document.getElementById('grade-respostas');
+  grade.innerHTML = q.alternativas.map((a,i)=>`
+    <button class="opcao-resposta ${CORES_LETRA[i]}" data-indice="${i}">
+      <span class="marca">${LETRAS[i]}</span><span>${escaparHtml(a)}</span>
+    </button>
+  `).join('');
+  grade.querySelectorAll('.opcao-resposta').forEach(btn=>{
+    btn.addEventListener('click', ()=> responder(parseInt(btn.dataset.indice,10)));
+  });
+
+  estado.quiz.tempoTotal = q.tempo;
+  estado.quiz.tempoRestante = q.tempo;
+  atualizarTemporizadorVisual();
+  clearInterval(estado.quiz.timerId);
+  estado.quiz.timerId = setInterval(()=>{
+    estado.quiz.tempoRestante -= 1;
+    atualizarTemporizadorVisual();
+    if(estado.quiz.tempoRestante <= 0){
+      clearInterval(estado.quiz.timerId);
+      if(!estado.quiz.respondeu) responder(null);
+    }
+  }, 1000);
+}
+
+function atualizarTemporizadorVisual(){
+  const el = document.getElementById('temporizador');
+  const numero = document.getElementById('temporizador-numero');
+  const pct = Math.max(0, (estado.quiz.tempoRestante / estado.quiz.tempoTotal) * 100);
+  el.style.setProperty('--pct', pct);
+  numero.textContent = Math.max(0, estado.quiz.tempoRestante);
+  el.classList.toggle('urgente', estado.quiz.tempoRestante <= 5 && estado.quiz.tempoRestante > 0);
+}
+
+function responder(indiceEscolhido){
+  if(estado.quiz.respondeu) return;
+  estado.quiz.respondeu = true;
+  clearInterval(estado.quiz.timerId);
+
+  const q = estado.quiz.ordem[estado.quiz.indice];
+  const acertou = indiceEscolhido === q.correta;
+  const botoes = document.querySelectorAll('#grade-respostas .opcao-resposta');
+  const feedback = document.getElementById('feedback-resposta');
+
+  botoes.forEach(btn=>{
+    btn.disabled = true;
+    const i = parseInt(btn.dataset.indice,10);
+    if(i === q.correta) btn.classList.add('correta-marcada');
+    else if(i === indiceEscolhido) btn.classList.add('errada-marcada');
+    else btn.classList.add('esmaecida');
+  });
+
+  if(acertou){
+    const pontos = calcularPontuacao(estado.quiz.tempoRestante, estado.quiz.tempoTotal);
+    estado.quiz.pontuacao += pontos;
+    estado.quiz.acertos += 1;
+    feedback.textContent = `✓ Certa resposta! +${pontos} pontos`;
+    feedback.className = 'feedback-resposta acerto';
+  } else {
+    estado.quiz.erros += 1;
+    feedback.textContent = indiceEscolhido === null
+      ? `✗ Tempo esgotado. A resposta certa era "${q.alternativas[q.correta]}"`
+      : `✗ Não foi dessa vez. A resposta certa era "${q.alternativas[q.correta]}"`;
+    feedback.className = 'feedback-resposta erro';
+  }
+  document.getElementById('quiz-pontuacao-atual').textContent = `${estado.quiz.pontuacao} pontos`;
+
+  setTimeout(()=>{
+    if(estado.quiz.indice < estado.quiz.ordem.length - 1){
+      estado.quiz.indice += 1;
+      exibirQuestaoAtual();
+    } else {
+      finalizarQuiz();
+    }
+  }, 1800);
+}
+
+/* ============================================================
+   8. SISTEMA DE PONTUAÇÃO
+   ============================================================
+   Pontuação = base fixa por acerto + bônus proporcional à
+   velocidade da resposta (quanto mais tempo restar, mais pontos).
+*/
+function calcularPontuacao(tempoRestante, tempoTotal){
+  const base = 500;
+  const bonusMaximo = 500;
+  const proporcaoRestante = Math.max(0, tempoRestante) / tempoTotal;
+  return base + Math.round(bonusMaximo * proporcaoRestante);
+}
+
+function finalizarQuiz(){
+  const total = estado.quiz.ordem.length;
+  const aproveitamento = Math.round((estado.quiz.acertos / total) * 100);
+
+  document.getElementById('pontuacao-final').textContent = estado.quiz.pontuacao;
+  document.getElementById('stat-acertos').textContent = estado.quiz.acertos;
+  document.getElementById('stat-erros').textContent = estado.quiz.erros;
+  document.getElementById('stat-aproveitamento').textContent = aproveitamento + '%';
+
+  const selo = document.getElementById('selo-classificacao');
+  if(aproveitamento >= 80){ selo.textContent = "Ancestralidade honrada 🏆"; selo.style.background = 'var(--verde)'; selo.style.color = 'var(--texto-claro)'; }
+  else if(aproveitamento >= 50){ selo.textContent = "Bom caminho, siga estudando"; selo.style.background = 'var(--dourado)'; selo.style.color = 'var(--texto-escuro)'; }
+  else{ selo.textContent = "Vale revisitar a história"; selo.style.background = 'var(--terra)'; selo.style.color = 'var(--texto-claro)'; }
+
+  irPara('tela-resultado');
+  dispararConfete();
+}
+
+function dispararConfete(){
+  const palco = document.getElementById('resultado-tela');
+  document.querySelectorAll('.confete').forEach(c=>c.remove());
+  const cores = ['#D6A24A','#A63A32','#3E6B4F','#C77B34','#F2E9DA'];
+  for(let i=0;i<28;i++){
+    const c = document.createElement('div');
+    c.className = 'confete';
+    const tamanho = 6 + Math.random()*8;
+    c.style.width = tamanho+'px';
+    c.style.height = tamanho+'px';
+    c.style.left = Math.random()*100+'%';
+    c.style.background = cores[i % cores.length];
+    c.style.transform = `rotate(${Math.random()*360}deg)`;
+    c.style.animation = `queda ${2.2 + Math.random()*1.6}s ease-in ${Math.random()*0.5}s forwards`;
+    palco.appendChild(c);
+  }
+}
+const estiloConfete = document.createElement('style');
+estiloConfete.textContent = `@keyframes queda{ to{ transform:translateY(110vh) rotate(360deg); opacity:0.15; } }`;
+document.head.appendChild(estiloConfete);
+
+document.getElementById('btn-jogar-novamente').addEventListener('click', iniciarQuiz);
+document.getElementById('btn-resultado-inicio').addEventListener('click', ()=> irPara('tela-inicio'));
+
+/* ============================================================
+   9. INICIALIZAÇÃO
+   ============================================================ */
+(async function iniciar(){
+  estado.questoes = await carregarQuestoes();
+})();
+</script>
+</body>
+</html>
